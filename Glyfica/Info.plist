@@ -7,5 +7,9 @@
 		<key>UIColorName</key>
 		<string>GlyficaBG</string>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Glyfica needs the camera to photograph your palm for a reading.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Glyfica needs photo access so you can choose a palm picture for a reading.</string>
 </dict>
 </plist>

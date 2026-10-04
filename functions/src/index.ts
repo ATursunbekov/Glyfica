@@ -48,11 +48,24 @@ interface PartnerPayload {
   sunSign?: string;
 }
 
+interface TarotCardPayload {
+  id?: string;
+  name?: string;
+  position?: string;
+  isReversed?: boolean;
+  suit?: string;
+}
+
 interface GenerateReadingRequest {
   type?: string;
   force?: boolean;
   dateKey?: string;
   partner?: PartnerPayload;
+  imageBase64?: string;
+  mimeType?: string;
+  spread?: string;
+  question?: string;
+  cards?: TarotCardPayload[];
 }
 
 const COMPAT_AREAS = ["Love", "Passion", "Trust", "Values", "Emotions", "Marriage"] as const;
@@ -72,8 +85,8 @@ export const generateReading = onCall(
   {
     secrets: [openaiApiKey],
     region: "us-central1",
-    timeoutSeconds: 60,
-    memory: "512MiB",
+    timeoutSeconds: 90,
+    memory: "1GiB",
   },
   async (request) => {
     if (!request.auth?.uid) {
@@ -125,6 +138,27 @@ export const generateReading = onCall(
         force,
         partnerPayload: payload.partner,
         userDoc: user,
+      });
+    }
+
+    if (type === "palm") {
+      return generatePalmReading({
+        userRef,
+        ctx,
+        apiKey: openaiApiKey.value(),
+        imageBase64: payload.imageBase64,
+        mimeType: payload.mimeType,
+      });
+    }
+
+    if (type === "tarot") {
+      return generateTarotReading({
+        userRef,
+        ctx,
+        apiKey: openaiApiKey.value(),
+        spread: payload.spread,
+        question: payload.question,
+        cards: payload.cards,
       });
     }
 
@@ -318,6 +352,17 @@ function hashInput(parts: Record<string, string | number>): string {
 }
 
 async function callOpenAIJson(apiKey: string, system: string, user: string): Promise<Record<string, unknown>> {
+  return callOpenAIMessages(apiKey, [
+    {role: "system", content: system},
+    {role: "user", content: user},
+  ]);
+}
+
+async function callOpenAIMessages(
+  apiKey: string,
+  messages: Array<Record<string, unknown>>,
+  temperature = 0.85,
+): Promise<Record<string, unknown>> {
   const response = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
     headers: {
@@ -326,12 +371,9 @@ async function callOpenAIJson(apiKey: string, system: string, user: string): Pro
     },
     body: JSON.stringify({
       model: "gpt-4o-mini",
-      temperature: 0.85,
+      temperature,
       response_format: {type: "json_object"},
-      messages: [
-        {role: "system", content: system},
-        {role: "user", content: user},
-      ],
+      messages,
     }),
   });
 
@@ -354,6 +396,211 @@ async function callOpenAIJson(apiKey: string, system: string, user: string): Pro
   } catch {
     throw new HttpsError("internal", "Invalid model JSON.");
   }
+}
+
+async function generateTarotReading(args: {
+  userRef: DocumentReference;
+  ctx: UserContext;
+  apiKey: string;
+  spread?: string;
+  question?: string;
+  cards?: TarotCardPayload[];
+}) {
+  const spread = args.spread === "single" ? "single" : "threeCard";
+  const question = String(args.question ?? "").trim();
+  if (!question) {
+    throw new HttpsError("invalid-argument", "A question is required before reading tarot cards.");
+  }
+
+  const cards = (args.cards ?? [])
+    .map((card) => ({
+      id: String(card.id ?? "").trim(),
+      name: String(card.name ?? "").trim(),
+      position: String(card.position ?? "").trim(),
+      isReversed: card.isReversed === true,
+      suit: String(card.suit ?? "").trim(),
+    }))
+    .filter((card) => card.id && card.name && card.position);
+
+  const expected = spread === "single" ? 1 : 3;
+  if (cards.length !== expected) {
+    throw new HttpsError("invalid-argument", `Tarot spread expects ${expected} cards.`);
+  }
+
+  const system = [
+    "You write Glyfica tarot readings for an astrology app.",
+    "Tone: warm, specific, modern, calm. No fatalism, no medical/financial/legal claims, no emojis.",
+    "The reading MUST answer the user's question. Every card meaning should relate back to that question.",
+    "Honor upright vs reversed meanings. Keep each card meaning to 2-3 sentences.",
+    "Return ONLY valid JSON with exactly these keys:",
+    '{"headline":"...","overview":"...","advice":"...","cards":[{"id":"...","name":"...","position":"...","isReversed":false,"meaning":"..."}]}',
+    "headline: max 8 words. overview: 2 short paragraphs answering the question. advice: one practical sentence.",
+    "cards array must keep the same order, ids, names, positions, and isReversed flags provided by the user.",
+  ].join(" ");
+
+  const cardLines = cards.map((card, index) =>
+    `${index + 1}. [${card.position}] ${card.name}${card.isReversed ? " (Reversed)" : ""} — id=${card.id}, suit=${card.suit || "unknown"}`,
+  ).join("\n");
+
+  const user = [
+    `Question: ${question}`,
+    `Spread: ${spread === "single" ? "One card" : "Past / Present / Future"}`,
+    `Name: ${args.ctx.name}`,
+    `Sun sign: ${args.ctx.sunSign}`,
+    `Life path: ${args.ctx.lifePath}`,
+    `Focus: ${labelConcern(args.ctx.concern)}`,
+    `Relationship: ${labelRelationship(args.ctx.relationship)}`,
+    "",
+    "Drawn cards:",
+    cardLines,
+    "",
+    "Write a personalized reading that answers this exact question using this exact draw.",
+  ].join("\n");
+
+  const parsed = await callOpenAIJson(args.apiKey, system, user);
+  const cardsRaw = Array.isArray(parsed.cards) ? parsed.cards : [];
+  const byId = new Map<string, string>();
+  for (const row of cardsRaw) {
+    if (!row || typeof row !== "object") continue;
+    const item = row as {id?: string; meaning?: string};
+    if (typeof item.id === "string" && typeof item.meaning === "string" && item.meaning.trim()) {
+      byId.set(item.id, item.meaning.trim());
+    }
+  }
+
+  const meanings = cards.map((card) => {
+    const meaning = byId.get(card.id);
+    if (!meaning) {
+      throw new HttpsError("internal", `Missing meaning for card ${card.id}`);
+    }
+    return {
+      id: card.id,
+      name: card.name,
+      position: card.position,
+      isReversed: card.isReversed,
+      meaning,
+    };
+  });
+
+  const reading = {
+    id: `tarot_${Date.now()}`,
+    spread,
+    question,
+    headline: String(parsed.headline ?? "").trim(),
+    overview: String(parsed.overview ?? "").trim(),
+    advice: String(parsed.advice ?? "").trim(),
+    cards: meanings,
+  };
+
+  if (!reading.headline || !reading.overview) {
+    throw new HttpsError("internal", "Incomplete tarot reading.");
+  }
+
+  await args.userRef.collection("readings").doc("tarot_latest").set({
+    type: "tarot",
+    ...reading,
+    model: "gpt-4o-mini",
+    generatedAt: Timestamp.now(),
+    updatedAt: Timestamp.now(),
+  }, {merge: true});
+
+  return {
+    type: "tarot",
+    cached: false,
+    ...reading,
+  };
+}
+
+async function generatePalmReading(args: {
+  userRef: DocumentReference;
+  ctx: UserContext;
+  apiKey: string;
+  imageBase64?: string;
+  mimeType?: string;
+}) {
+  const raw = (args.imageBase64 ?? "").replace(/\s/g, "");
+  if (!raw || raw.length < 1000) {
+    throw new HttpsError("invalid-argument", "Palm photo required.");
+  }
+  // ~4MB base64 ceiling keeps the callable request practical.
+  if (raw.length > 5_500_000) {
+    throw new HttpsError("invalid-argument", "Photo is too large. Try a smaller image.");
+  }
+
+  const mime = args.mimeType === "image/png" ? "image/png" : "image/jpeg";
+  const system = [
+    "You are a palmistry reader for the Glyfica app.",
+    "Look at the attached hand photo and write an entertainment palm reading.",
+    "If the image is not a clear open palm, still be gentle and say what you can see, but prefer useful poetic guidance over refusal.",
+    "Tone: warm, specific, calm, modern. No medical/financial/legal claims. No emojis.",
+    "Return ONLY valid JSON with exactly these keys:",
+    '{"headline":"...","overview":"...","lifeLine":"...","heartLine":"...","headLine":"...","fateLine":"...","nearFuture":"...","advice":"...","vitality":72,"emotion":68,"mind":75,"destiny":61,"outlook":70}',
+    "headline: max 8 words. overview: 2 short paragraphs. each text field: 1-2 sentences.",
+    "Scores are integers 40-96. vitality~life line, emotion~heart, mind~head, destiny~fate, outlook~near future.",
+  ].join(" ");
+
+  const userText = [
+    `Name: ${args.ctx.name}`,
+    `Sun sign: ${args.ctx.sunSign}`,
+    `Life path: ${args.ctx.lifePath}`,
+    `Focus: ${labelConcern(args.ctx.concern)}`,
+    `Relationship: ${labelRelationship(args.ctx.relationship)}`,
+    "",
+    "Read this palm photo. Weave their chart lightly into the tone, but ground the reading in the hand lines you can see.",
+  ].join("\n");
+
+  const parsed = await callOpenAIMessages(args.apiKey, [
+    {role: "system", content: system},
+    {
+      role: "user",
+      content: [
+        {type: "text", text: userText},
+        {
+          type: "image_url",
+          image_url: {
+            url: `data:${mime};base64,${raw}`,
+            detail: "low",
+          },
+        },
+      ],
+    },
+  ], 0.8);
+
+  const reading = {
+    id: `palm_${Date.now()}`,
+    headline: String(parsed.headline ?? "").trim(),
+    overview: String(parsed.overview ?? "").trim(),
+    lifeLine: String(parsed.lifeLine ?? "").trim(),
+    heartLine: String(parsed.heartLine ?? "").trim(),
+    headLine: String(parsed.headLine ?? "").trim(),
+    fateLine: String(parsed.fateLine ?? "").trim(),
+    nearFuture: String(parsed.nearFuture ?? "").trim(),
+    advice: String(parsed.advice ?? "").trim(),
+    vitality: clampScore(parsed.vitality),
+    emotion: clampScore(parsed.emotion),
+    mind: clampScore(parsed.mind),
+    destiny: clampScore(parsed.destiny),
+    outlook: clampScore(parsed.outlook),
+  };
+
+  if (!reading.headline || !reading.overview) {
+    throw new HttpsError("internal", "Incomplete palm reading.");
+  }
+
+  const doc = {
+    type: "palm",
+    ...reading,
+    model: "gpt-4o-mini",
+    generatedAt: Timestamp.now(),
+    updatedAt: Timestamp.now(),
+  };
+  await args.userRef.collection("readings").doc("palm_latest").set(doc, {merge: true});
+
+  return {
+    type: "palm",
+    cached: false,
+    ...reading,
+  };
 }
 
 async function generatePersonalitySections(

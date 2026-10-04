@@ -2,8 +2,7 @@
 //  RootTabView.swift
 //  Glyfica
 //
-//  Four-tab shell on the system TabView, so the bar is Liquid Glass and
-//  collapses while a screen scrolls down.
+//  Four-tab shell: Horoscope, Today, Oracle hub, Profile.
 //
 
 import SwiftUI
@@ -11,7 +10,7 @@ import SwiftUI
 enum AppTab: Int, CaseIterable, Identifiable {
     case horoscope
     case forecast
-    case compatibility
+    case oracle
     case profile
 
     var id: Int { rawValue }
@@ -20,7 +19,7 @@ enum AppTab: Int, CaseIterable, Identifiable {
         switch self {
         case .horoscope: return "Horoscope"
         case .forecast: return "Today"
-        case .compatibility: return "Match"
+        case .oracle: return "Oracle"
         case .profile: return "Profile"
         }
     }
@@ -29,7 +28,7 @@ enum AppTab: Int, CaseIterable, Identifiable {
         switch self {
         case .horoscope: return "sparkles"
         case .forecast: return "sun.max"
-        case .compatibility: return "heart"
+        case .oracle: return "moon.stars"
         case .profile: return "person.crop.circle"
         }
     }
@@ -55,7 +54,7 @@ struct RootTabView: View {
         switch tab {
         case .horoscope: HoroscopeFlowContainerView()
         case .forecast: DailyForecastFlowContainerView()
-        case .compatibility: CompatibilityFlowContainerView()
+        case .oracle: ReadingsFlowContainerView()
         case .profile: ProfileFlowContainerView()
         }
     }

@@ -70,3 +70,52 @@ struct CompatibilityReading: Equatable {
     let tip: String
     let areas: [CompatibilityArea]
 }
+
+struct PalmScore: Equatable, Identifiable {
+    let id: String
+    let title: String
+    let value: Int
+}
+
+struct PalmReading: Equatable, Identifiable {
+    let id: String
+    let headline: String
+    let overview: String
+    let lifeLine: String
+    let heartLine: String
+    let headLine: String
+    let fateLine: String
+    let nearFuture: String
+    let advice: String
+    let vitality: Int
+    let emotion: Int
+    let mind: Int
+    let destiny: Int
+    let outlook: Int
+
+    var scores: [PalmScore] {
+        [
+            PalmScore(id: "vitality", title: "Vitality", value: vitality),
+            PalmScore(id: "emotion", title: "Emotion", value: emotion),
+            PalmScore(id: "mind", title: "Mind", value: mind),
+            PalmScore(id: "destiny", title: "Destiny", value: destiny),
+            PalmScore(id: "outlook", title: "Outlook", value: outlook)
+        ]
+    }
+
+    var overall: Int {
+        let values = [vitality, emotion, mind, destiny, outlook]
+        return values.reduce(0, +) / max(values.count, 1)
+    }
+
+    var sections: [(title: String, body: String)] {
+        [
+            ("Life line", lifeLine),
+            ("Heart line", heartLine),
+            ("Head line", headLine),
+            ("Fate line", fateLine),
+            ("Near future", nearFuture),
+            ("Advice", advice)
+        ]
+    }
+}
