@@ -2,8 +2,8 @@
 //  GlyficaColor.swift
 //  Glyfica
 //
-//  "Night sky and gold" palette. Base colors live in Assets.xcassets,
-//  one color set per token; score colors stay in code.
+//  Night-sky navy + gold palette, matched to the starfield background.
+//  Base colors live in Assets.xcassets; score colors stay in code.
 //
 
 import SwiftUI

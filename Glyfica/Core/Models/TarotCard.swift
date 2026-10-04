@@ -31,7 +31,7 @@ struct TarotCard: Codable, Equatable, Identifiable, Hashable {
     let suit: TarotSuit
     let number: Int
 
-    /// Future image set name, e.g. `tarot_major_00`.
+    /// Asset catalog name, e.g. `tarot_major_00`.
     var assetName: String { "tarot_\(id)" }
 }
 
@@ -87,6 +87,7 @@ struct TarotCardMeaning: Equatable, Identifiable {
     let position: String
     let isReversed: Bool
     let meaning: String
+    let assetName: String
 
     var displayName: String {
         isReversed ? "\(name) (Reversed)" : name

@@ -312,7 +312,7 @@ struct CompatibilityView: View {
 
     private func personColumn(name: String, sign: ZodiacSign) -> some View {
         VStack(spacing: 6) {
-            SignGlyph(sign: sign, size: 36)
+            SignGlyph(sign: sign, size: 64)
             Text(name)
                 .font(GlyficaFont.rounded(14, weight: .semibold))
                 .foregroundStyle(GlyficaColor.ink)
@@ -321,6 +321,6 @@ struct CompatibilityView: View {
                 .font(GlyficaFont.rounded(12))
                 .foregroundStyle(GlyficaColor.ink2)
         }
-        .frame(maxWidth: 110)
+        .frame(maxWidth: 130)
     }
 }

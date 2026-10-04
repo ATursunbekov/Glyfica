@@ -58,6 +58,9 @@ enum ZodiacSign: String, Codable, CaseIterable, Identifiable {
         }
     }
 
+    /// Asset catalog image name (GeneratedAssets/Zodiac → Assets.xcassets).
+    var imageName: String { rawValue }
+
     var element: ZodiacElement {
         switch self {
         case .aries, .leo, .sagittarius: return .fire

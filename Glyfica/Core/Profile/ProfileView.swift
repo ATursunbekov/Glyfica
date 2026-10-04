@@ -99,20 +99,20 @@ struct ProfileView: View {
                                 colors: [GlyficaColor.gold.opacity(0.35), GlyficaColor.surface2.opacity(0.2)],
                                 center: .center,
                                 startRadius: 4,
-                                endRadius: 54
+                                endRadius: 78
                             )
                         )
-                        .frame(width: 96, height: 96)
+                        .frame(width: 140, height: 140)
 
                     Circle()
                         .stroke(GlyficaColor.gold.opacity(0.55), lineWidth: 1.5)
-                        .frame(width: 96, height: 96)
+                        .frame(width: 140, height: 140)
 
                     if let sign = profileStore.profile?.sign {
-                        SignGlyph(sign: sign, size: 42)
+                        SignGlyph(sign: sign, size: 108)
                     } else {
                         Image(systemName: "person.fill")
-                            .font(.system(size: 34))
+                            .font(.system(size: 44))
                             .foregroundStyle(GlyficaColor.gold)
                     }
                 }

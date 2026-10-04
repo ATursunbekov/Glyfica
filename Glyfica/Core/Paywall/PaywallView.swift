@@ -63,7 +63,7 @@ struct PaywallView: View {
     private var header: some View {
         VStack(spacing: 14) {
             if let sign = profileStore.profile?.sign {
-                SignGlyph(sign: sign, size: 56)
+                SignGlyph(sign: sign, size: 88)
             } else {
                 Image("logo")
                     .resizable()

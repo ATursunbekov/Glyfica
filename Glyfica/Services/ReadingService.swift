@@ -449,18 +449,26 @@ enum ReadingService {
         guard let overview = data["overview"] as? String, !overview.isEmpty else { return nil }
 
         let cardsData = data["cards"] as? [[String: Any]] ?? []
-        var meanings: [TarotCardMeaning] = cardsData.compactMap { row in
+        var meanings: [TarotCardMeaning] = []
+        for (index, row) in cardsData.enumerated() {
             guard let name = row["name"] as? String,
                   let position = row["position"] as? String,
                   let meaning = row["meaning"] as? String,
                   !meaning.isEmpty
-            else { return nil }
-            return TarotCardMeaning(
-                id: (row["id"] as? String) ?? "\(position)-\(name)",
-                name: name,
-                position: position,
-                isReversed: row["isReversed"] as? Bool ?? false,
-                meaning: meaning
+            else { continue }
+            let drawnCard = drawn.indices.contains(index) ? drawn[index] : nil
+            let assetName = drawnCard?.card.assetName
+                ?? TarotDeck.card(id: (row["id"] as? String) ?? "")?.assetName
+                ?? "tarot_major_00"
+            meanings.append(
+                TarotCardMeaning(
+                    id: drawnCard?.id ?? ((row["id"] as? String) ?? "\(position)-\(name)"),
+                    name: name,
+                    position: position,
+                    isReversed: row["isReversed"] as? Bool ?? drawnCard?.isReversed ?? false,
+                    meaning: meaning,
+                    assetName: assetName
+                )
             )
         }
 
@@ -471,7 +479,8 @@ enum ReadingService {
                     name: card.card.name,
                     position: card.position,
                     isReversed: card.isReversed,
-                    meaning: "This card asks you to notice what feels unfinished and name the next honest step."
+                    meaning: "This card asks you to notice what feels unfinished and name the next honest step.",
+                    assetName: card.card.assetName
                 )
             }
         }
@@ -507,7 +516,8 @@ enum ReadingService {
                     isReversed: card.isReversed,
                     meaning: card.isReversed
                         ? "Reversed, \(card.card.name) asks you to pause a habit that has been draining the moment around your question."
-                        : "\(card.card.name) highlights a theme of clarity and follow-through in the \(card.position.lowercased()) for this question."
+                        : "\(card.card.name) highlights a theme of clarity and follow-through in the \(card.position.lowercased()) for this question.",
+                    assetName: card.card.assetName
                 )
             }
         )

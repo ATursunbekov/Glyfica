@@ -46,7 +46,7 @@ struct ReadingsFlowContainerView: View {
         NavigationStack(path: $path) {
             ReadingsHubView(path: $path)
                 .navigationDestination(for: OracleDestination.self) { destination in
-                    OracleBackContainer {
+                    OracleDetailContainer(path: $path) {
                         switch destination {
                         case .match: CompatibilityView()
                         case .tarot: TarotView()
@@ -126,27 +126,34 @@ struct ReadingsHubView: View {
     }
 }
 
-private struct OracleBackContainer<Content: View>: View {
-    @Environment(\.dismiss) private var dismiss
+/// Pushes content down so back never overlaps titles, pops via path, hides tab bar.
+private struct OracleDetailContainer<Content: View>: View {
+    @Binding var path: [OracleDestination]
     @ViewBuilder var content: Content
 
     var body: some View {
-        ZStack(alignment: .topLeading) {
-            content
+        content
+            .safeAreaInset(edge: .top, spacing: 0) {
+                HStack {
+                    Button {
+                        guard !path.isEmpty else { return }
+                        path.removeLast()
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundStyle(GlyficaColor.ink)
+                            .frame(width: 44, height: 44)
+                            .contentShape(Rectangle())
+                            .glassEffect(.regular.interactive(), in: Circle())
+                    }
+                    .buttonStyle(.plain)
 
-            Button {
-                dismiss()
-            } label: {
-                Image(systemName: "chevron.left")
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundStyle(GlyficaColor.ink)
-                    .frame(width: 36, height: 36)
-                    .glassEffect(.regular.interactive(), in: Circle())
+                    Spacer()
+                }
+                .padding(.horizontal, 16)
+                .padding(.top, 4)
+                .padding(.bottom, 6)
             }
-            .buttonStyle(.plain)
-            .padding(.leading, 20)
-            .padding(.top, 8)
-            .zIndex(1)
-        }
+            .toolbar(.hidden, for: .tabBar)
     }
 }

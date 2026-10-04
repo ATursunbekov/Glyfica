@@ -197,15 +197,48 @@ struct TarotView: View {
     }
 
     private var drawnCardsSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 14) {
             Text("Your draw")
                 .font(GlyficaFont.rounded(13, weight: .semibold))
                 .foregroundStyle(GlyficaColor.gold)
                 .textCase(.uppercase)
                 .tracking(0.5)
 
-            ForEach(viewModel.drawnCards) { card in
-                cardTile(position: card.position, name: card.displayName, suit: card.card.suit.title)
+            NightCard(padding: 16) {
+                VStack(spacing: 16) {
+                    HStack(alignment: .top, spacing: 12) {
+                        ForEach(viewModel.drawnCards) { card in
+                            VStack(spacing: 10) {
+                                Text(card.position.uppercased())
+                                    .font(GlyficaFont.rounded(11, weight: .bold))
+                                    .foregroundStyle(GlyficaColor.gold)
+                                    .tracking(0.5)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.8)
+
+                                TarotCardArt(
+                                    assetName: card.card.assetName,
+                                    isReversed: card.isReversed,
+                                    width: viewModel.drawnCards.count == 1 ? 148 : 104
+                                )
+
+                                Text(card.card.name)
+                                    .font(GlyficaFont.rounded(13, weight: .semibold))
+                                    .foregroundStyle(GlyficaColor.ink)
+                                    .multilineTextAlignment(.center)
+                                    .lineLimit(2)
+                                    .fixedSize(horizontal: false, vertical: true)
+
+                                if card.isReversed {
+                                    Text("Reversed")
+                                        .font(GlyficaFont.rounded(11, weight: .semibold))
+                                        .foregroundStyle(GlyficaColor.ink2)
+                                }
+                            }
+                            .frame(maxWidth: .infinity)
+                        }
+                    }
+                }
             }
         }
     }
@@ -216,16 +249,31 @@ struct TarotView: View {
         VStack(spacing: 16) {
             Spacer()
             NightCard {
-                HStack(spacing: 12) {
-                    ProgressView()
-                        .tint(GlyficaColor.gold)
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Reading the cards…")
-                            .font(GlyficaFont.rounded(16, weight: .semibold))
-                            .foregroundStyle(GlyficaColor.ink)
-                        Text("Answering your question through this spread.")
-                            .font(GlyficaFont.rounded(14))
-                            .foregroundStyle(GlyficaColor.ink2)
+                VStack(alignment: .leading, spacing: 14) {
+                    if !viewModel.drawnCards.isEmpty {
+                        HStack(spacing: 10) {
+                            ForEach(viewModel.drawnCards) { card in
+                                TarotCardArt(
+                                    assetName: card.card.assetName,
+                                    isReversed: card.isReversed,
+                                    width: viewModel.drawnCards.count == 1 ? 88 : 64
+                                )
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+
+                    HStack(spacing: 12) {
+                        ProgressView()
+                            .tint(GlyficaColor.gold)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Reading the cards…")
+                                .font(GlyficaFont.rounded(16, weight: .semibold))
+                                .foregroundStyle(GlyficaColor.ink)
+                            Text("Answering your question through this spread.")
+                                .font(GlyficaFont.rounded(14))
+                                .foregroundStyle(GlyficaColor.ink2)
+                        }
                     }
                 }
             }
@@ -269,20 +317,52 @@ struct TarotView: View {
                     }
                 }
 
+                // Spread overview strip
+                NightCard(padding: 14) {
+                    HStack(alignment: .top, spacing: 10) {
+                        ForEach(reading.cards) { card in
+                            VStack(spacing: 8) {
+                                Text(card.position.uppercased())
+                                    .font(GlyficaFont.rounded(10, weight: .bold))
+                                    .foregroundStyle(GlyficaColor.gold)
+                                    .tracking(0.4)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.75)
+                                TarotCardArt(
+                                    assetName: card.assetName,
+                                    isReversed: card.isReversed,
+                                    width: reading.cards.count == 1 ? 120 : 92
+                                )
+                            }
+                            .frame(maxWidth: .infinity)
+                        }
+                    }
+                }
+
                 ForEach(reading.cards) { card in
                     NightCard {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text(card.position.uppercased())
-                                .font(GlyficaFont.rounded(11, weight: .bold))
-                                .foregroundStyle(GlyficaColor.gold)
-                                .tracking(0.6)
-                            Text(card.displayName)
-                                .font(GlyficaFont.rounded(18, weight: .bold))
-                                .foregroundStyle(GlyficaColor.ink)
-                            Text(card.meaning)
-                                .font(GlyficaFont.rounded(15))
-                                .foregroundStyle(GlyficaColor.ink)
-                                .fixedSize(horizontal: false, vertical: true)
+                        HStack(alignment: .top, spacing: 14) {
+                            TarotCardArt(
+                                assetName: card.assetName,
+                                isReversed: card.isReversed,
+                                width: 92
+                            )
+
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text(card.position.uppercased())
+                                    .font(GlyficaFont.rounded(11, weight: .bold))
+                                    .foregroundStyle(GlyficaColor.gold)
+                                    .tracking(0.6)
+                                Text(card.displayName)
+                                    .font(GlyficaFont.rounded(18, weight: .bold))
+                                    .foregroundStyle(GlyficaColor.ink)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                Text(card.meaning)
+                                    .font(GlyficaFont.rounded(15))
+                                    .foregroundStyle(GlyficaColor.ink)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .lineSpacing(2)
+                            }
                         }
                     }
                 }
@@ -329,42 +409,30 @@ struct TarotView: View {
                 .foregroundStyle(GlyficaColor.ink2)
         }
     }
+}
 
-    private func cardTile(position: String, name: String, suit: String) -> some View {
-        NightCard(padding: 14) {
-            HStack(spacing: 14) {
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(GlyficaColor.surface2.opacity(0.9))
-                    .overlay {
-                        VStack(spacing: 4) {
-                            Image(systemName: "suit.diamond.fill")
-                                .font(.system(size: 18, weight: .semibold))
-                                .foregroundStyle(GlyficaColor.gold)
-                            Text(position)
-                                .font(GlyficaFont.rounded(10, weight: .bold))
-                                .foregroundStyle(GlyficaColor.ink2)
-                        }
-                    }
-                    .frame(width: 64, height: 88)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .stroke(GlyficaColor.gold.opacity(0.35), lineWidth: 1)
-                    )
+// MARK: - Card art
 
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(position)
-                        .font(GlyficaFont.rounded(12, weight: .semibold))
-                        .foregroundStyle(GlyficaColor.gold)
-                    Text(name)
-                        .font(GlyficaFont.rounded(17, weight: .bold))
-                        .foregroundStyle(GlyficaColor.ink)
-                        .fixedSize(horizontal: false, vertical: true)
-                    Text(suit)
-                        .font(GlyficaFont.rounded(13))
-                        .foregroundStyle(GlyficaColor.ink2)
-                }
-            }
-        }
+struct TarotCardArt: View {
+    let assetName: String
+    var isReversed: Bool = false
+    var width: CGFloat = 104
+
+    private var height: CGFloat { width * 1.72 }
+
+    var body: some View {
+        Image(assetName)
+            .resizable()
+            .scaledToFill()
+            .frame(width: width, height: height)
+            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .stroke(GlyficaColor.gold.opacity(0.4), lineWidth: 1)
+            )
+            .rotationEffect(.degrees(isReversed ? 180 : 0))
+            .shadow(color: .black.opacity(0.35), radius: 8, y: 4)
+            .accessibilityLabel(isReversed ? "\(assetName), reversed" : assetName)
     }
 }
 

@@ -38,12 +38,14 @@ struct AppBackground: View {
 
 struct SignGlyph: View {
     let sign: ZodiacSign
-    var size: CGFloat = 28
+    var size: CGFloat = 44
 
     var body: some View {
-        Text(sign.symbol)
-            .font(GlyficaFont.rounded(size, weight: .light))
-            .foregroundStyle(GlyficaColor.ink)
+        Image(sign.imageName)
+            .resizable()
+            .scaledToFit()
+            .frame(width: size, height: size)
+            .accessibilityLabel(sign.title)
     }
 }
 

@@ -58,7 +58,7 @@ struct HoroscopeView: View {
                     HStack(alignment: .center, spacing: 12) {
                         signColumn(label: "Sun sign", value: reading.sign.title)
                         Spacer()
-                        SignGlyph(sign: reading.sign, size: 64)
+                        SignGlyph(sign: reading.sign, size: 96)
                         Spacer()
                         signColumn(label: "Element", value: reading.sign.element.title)
                     }

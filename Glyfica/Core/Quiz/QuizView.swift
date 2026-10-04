@@ -388,7 +388,7 @@ private struct QuizRoot: View {
                         Text("Your sun sign")
                             .font(GlyficaFont.rounded(14))
                             .foregroundStyle(GlyficaColor.gold)
-                        SignGlyph(sign: sign, size: 72)
+                        SignGlyph(sign: sign, size: 110)
                         Text(sign.title)
                             .font(GlyficaFont.rounded(32, weight: .bold))
                             .foregroundStyle(GlyficaColor.ink)
@@ -476,7 +476,7 @@ private struct QuizRoot: View {
                 NightCard {
                     VStack(alignment: .leading, spacing: 14) {
                         HStack(spacing: 12) {
-                            SignGlyph(sign: sign, size: 44)
+                            SignGlyph(sign: sign, size: 68)
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(viewModel.answers.name.isEmpty ? "Your reading" : viewModel.answers.name)
                                     .font(GlyficaFont.rounded(20, weight: .bold))

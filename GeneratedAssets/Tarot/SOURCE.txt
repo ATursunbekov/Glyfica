@@ -1,0 +1,8 @@
+Rider–Waite–Smith (Pam-A) scans from Wikimedia Commons
+Category: Rider-Waite-Smith tarot deck (TaionWC)
+https://commons.wikimedia.org/wiki/Category:Rider-Waite-Smith_tarot_deck_(TaionWC)
+License: Public domain (original 1909 deck)
+Uploader set: TaionWC
+
+Original filenames kept in this folder.
+App-ready names (matching TarotCard.assetName) in named/

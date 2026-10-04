@@ -74,7 +74,7 @@ struct DailyForecastView: View {
 
                 NightCard {
                     HStack(spacing: 14) {
-                        SignGlyph(sign: forecast.sign, size: 48)
+                        SignGlyph(sign: forecast.sign, size: 72)
                         VStack(alignment: .leading, spacing: 6) {
                             Text(forecast.sign.title)
                                 .font(GlyficaFont.rounded(13, weight: .semibold))
