@@ -6,22 +6,100 @@
 	objectVersion = 110;
 	objects = {
 
-/* Begin PBXFileReference section */
-		6C40370A306964F300AC9EB3 /* Glyfica.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Glyfica.app; sourceTree = BUILT_PRODUCTS_DIR; };
-/* End PBXFileReference section */
+/* Begin PBXBuildFile section */
+		6C2C4BA0306D3DDD00E70781 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C2C4B9F306D3DDD00E70781 /* GoogleService-Info.plist */; };
+		6C50A0013070000000AB0001 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 6C50A0023070000000AB0001 /* FirebaseCore */; };
+		6C50A0013070000000AB0002 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6C50A0023070000000AB0002 /* FirebaseAuth */; };
+		6C50A0013070000000AB0003 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 6C50A0023070000000AB0003 /* FirebaseFirestore */; };
+		6C50A0013070000000AB0004 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 6C50A0023070000000AB0004 /* FirebaseFunctions */; };
+		6C50A0043070000000AB0018 /* ReadingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C50A0053070000000AB0018 /* ReadingService.swift */; };
+		6C50A0043070000000AB0019 /* PartnerEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C50A0053070000000AB0019 /* PartnerEditorView.swift */; };
+		6C50A0043070000000AB0001 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C50A0053070000000AB0001 /* FirebaseService.swift */; };
+		6C50A0043070000000AB0002 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C50A0053070000000AB0002 /* SessionStore.swift */; };
+		6C50A0043070000000AB0003 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C50A0053070000000AB0003 /* SplashView.swift */; };
+		6C50A0043070000000AB0010 /* QuizAnswers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C50A0053070000000AB0010 /* QuizAnswers.swift */; };
+		6C50A0043070000000AB0011 /* QuizStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C50A0053070000000AB0011 /* QuizStore.swift */; };
+		6C50A0043070000000AB0012 /* QuizViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C50A0053070000000AB0012 /* QuizViewModel.swift */; };
+		6C50A0043070000000AB0013 /* QuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C50A0053070000000AB0013 /* QuizView.swift */; };
+		6C50A0043070000000AB0014 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C50A0053070000000AB0014 /* Constants.swift */; };
+		6C50A0043070000000AB0015 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C50A0053070000000AB0015 /* Subscription.swift */; };
+		6C50A0043070000000AB0016 /* SubscriptionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C50A0053070000000AB0016 /* SubscriptionStore.swift */; };
+		6C50A0043070000000AB0017 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C50A0053070000000AB0017 /* PaywallView.swift */; };
+		6CF556CF306BFB8500089DAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CF556CD306BFB8500089DAB /* Assets.xcassets */; };
+		6CF556D0306BFB8500089DAB /* CompatibilityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556AB306BFB8500089DAB /* CompatibilityView.swift */; };
+		6CF556D1306BFB8500089DAB /* CompatibilityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556AC306BFB8500089DAB /* CompatibilityViewModel.swift */; };
+		6CF556D2306BFB8500089DAB /* DailyForecastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556AE306BFB8500089DAB /* DailyForecastView.swift */; };
+		6CF556D3306BFB8500089DAB /* DailyForecastViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556AF306BFB8500089DAB /* DailyForecastViewModel.swift */; };
+		6CF556D4306BFB8500089DAB /* NightCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556B1306BFB8500089DAB /* NightCard.swift */; };
+		6CF556D5306BFB8500089DAB /* GlyficaColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556B3306BFB8500089DAB /* GlyficaColor.swift */; };
+		6CF556D6306BFB8500089DAB /* GlyficaFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556B4306BFB8500089DAB /* GlyficaFont.swift */; };
+		6CF556D7306BFB8500089DAB /* HoroscopeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556B6306BFB8500089DAB /* HoroscopeView.swift */; };
+		6CF556D8306BFB8500089DAB /* HoroscopeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556B7306BFB8500089DAB /* HoroscopeViewModel.swift */; };
+		6CF556D9306BFB8500089DAB /* GlyficaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556B9306BFB8500089DAB /* GlyficaApp.swift */; };
+		6CF556DA306BFB8500089DAB /* BirthProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556BB306BFB8500089DAB /* BirthProfile.swift */; };
+		6CF556DB306BFB8500089DAB /* ZodiacSign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556BC306BFB8500089DAB /* ZodiacSign.swift */; };
+		6CF556DC306BFB8500089DAB /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556BE306BFB8500089DAB /* ProfileView.swift */; };
+		6CF556DD306BFB8500089DAB /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556BF306BFB8500089DAB /* ProfileViewModel.swift */; };
+		6CF556DE306BFB8500089DAB /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556C1306BFB8500089DAB /* AppRouter.swift */; };
+		6CF556DF306BFB8500089DAB /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556C2306BFB8500089DAB /* RootView.swift */; };
+		6CF556E0306BFB8500089DAB /* CompatibilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556C4306BFB8500089DAB /* CompatibilityService.swift */; };
+		6CF556E1306BFB8500089DAB /* DailyForecastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556C5306BFB8500089DAB /* DailyForecastService.swift */; };
+		6CF556E2306BFB8500089DAB /* HoroscopeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556C6306BFB8500089DAB /* HoroscopeService.swift */; };
+		6CF556E3306BFB8500089DAB /* PartnerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556C7306BFB8500089DAB /* PartnerStore.swift */; };
+		6CF556E4306BFB8500089DAB /* ProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556C8306BFB8500089DAB /* ProfileStore.swift */; };
+		6CF556E5306BFB8500089DAB /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF556CA306BFB8500089DAB /* RootTabView.swift */; };
+/* End PBXBuildFile section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		6C40370C306964F300AC9EB3 /* Glyfica */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Glyfica;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
+/* Begin PBXFileReference section */
+		6C2C4B9F306D3DDD00E70781 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6C40370A306964F300AC9EB3 /* Glyfica.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Glyfica.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C50A0053070000000AB0001 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
+		6C50A0053070000000AB0002 /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
+		6C50A0053070000000AB0003 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		6C50A0053070000000AB0004 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6C50A0053070000000AB0010 /* QuizAnswers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizAnswers.swift; sourceTree = "<group>"; };
+		6C50A0053070000000AB0011 /* QuizStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizStore.swift; sourceTree = "<group>"; };
+		6C50A0053070000000AB0012 /* QuizViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewModel.swift; sourceTree = "<group>"; };
+		6C50A0053070000000AB0013 /* QuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView.swift; sourceTree = "<group>"; };
+		6C50A0053070000000AB0014 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		6C50A0053070000000AB0015 /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
+		6C50A0053070000000AB0016 /* SubscriptionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionStore.swift; sourceTree = "<group>"; };
+		6C50A0053070000000AB0017 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		6C50A0053070000000AB0018 /* ReadingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingService.swift; sourceTree = "<group>"; };
+		6C50A0053070000000AB0019 /* PartnerEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnerEditorView.swift; sourceTree = "<group>"; };
+		6CF556AB306BFB8500089DAB /* CompatibilityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompatibilityView.swift; sourceTree = "<group>"; };
+		6CF556AC306BFB8500089DAB /* CompatibilityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompatibilityViewModel.swift; sourceTree = "<group>"; };
+		6CF556AE306BFB8500089DAB /* DailyForecastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyForecastView.swift; sourceTree = "<group>"; };
+		6CF556AF306BFB8500089DAB /* DailyForecastViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyForecastViewModel.swift; sourceTree = "<group>"; };
+		6CF556B1306BFB8500089DAB /* NightCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightCard.swift; sourceTree = "<group>"; };
+		6CF556B3306BFB8500089DAB /* GlyficaColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlyficaColor.swift; sourceTree = "<group>"; };
+		6CF556B4306BFB8500089DAB /* GlyficaFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlyficaFont.swift; sourceTree = "<group>"; };
+		6CF556B6306BFB8500089DAB /* HoroscopeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoroscopeView.swift; sourceTree = "<group>"; };
+		6CF556B7306BFB8500089DAB /* HoroscopeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoroscopeViewModel.swift; sourceTree = "<group>"; };
+		6CF556B9306BFB8500089DAB /* GlyficaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlyficaApp.swift; sourceTree = "<group>"; };
+		6CF556BB306BFB8500089DAB /* BirthProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthProfile.swift; sourceTree = "<group>"; };
+		6CF556BC306BFB8500089DAB /* ZodiacSign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZodiacSign.swift; sourceTree = "<group>"; };
+		6CF556BE306BFB8500089DAB /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		6CF556BF306BFB8500089DAB /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		6CF556C1306BFB8500089DAB /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		6CF556C2306BFB8500089DAB /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		6CF556C4306BFB8500089DAB /* CompatibilityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompatibilityService.swift; sourceTree = "<group>"; };
+		6CF556C5306BFB8500089DAB /* DailyForecastService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyForecastService.swift; sourceTree = "<group>"; };
+		6CF556C6306BFB8500089DAB /* HoroscopeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoroscopeService.swift; sourceTree = "<group>"; };
+		6CF556C7306BFB8500089DAB /* PartnerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnerStore.swift; sourceTree = "<group>"; };
+		6CF556C8306BFB8500089DAB /* ProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStore.swift; sourceTree = "<group>"; };
+		6CF556CA306BFB8500089DAB /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
+		6CF556CD306BFB8500089DAB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		6C403707306964F300AC9EB3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				6C50A0013070000000AB0001 /* FirebaseCore in Frameworks */,
+				6C50A0013070000000AB0002 /* FirebaseAuth in Frameworks */,
+				6C50A0013070000000AB0003 /* FirebaseFirestore in Frameworks */,
+				6C50A0013070000000AB0004 /* FirebaseFunctions in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -30,7 +108,7 @@
 		6C403701306964F300AC9EB3 = {
 			isa = PBXGroup;
 			children = (
-				6C40370C306964F300AC9EB3 /* Glyfica */,
+				6CF556CE306BFB8500089DAB /* Glyfica */,
 				6C40370B306964F300AC9EB3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +119,171 @@
 				6C40370A306964F300AC9EB3 /* Glyfica.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		6CF556AD306BFB8500089DAB /* Compatibility */ = {
+			isa = PBXGroup;
+			children = (
+				6CF556AB306BFB8500089DAB /* CompatibilityView.swift */,
+				6CF556AC306BFB8500089DAB /* CompatibilityViewModel.swift */,
+				6C50A0053070000000AB0019 /* PartnerEditorView.swift */,
+			);
+			path = Compatibility;
+			sourceTree = "<group>";
+		};
+		6CF556B0306BFB8500089DAB /* DailyForecast */ = {
+			isa = PBXGroup;
+			children = (
+				6CF556AE306BFB8500089DAB /* DailyForecastView.swift */,
+				6CF556AF306BFB8500089DAB /* DailyForecastViewModel.swift */,
+			);
+			path = DailyForecast;
+			sourceTree = "<group>";
+		};
+		6CF556B2306BFB8500089DAB /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				6CF556B1306BFB8500089DAB /* NightCard.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		6CF556B5306BFB8500089DAB /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				6CF556B2306BFB8500089DAB /* Components */,
+				6CF556B3306BFB8500089DAB /* GlyficaColor.swift */,
+				6CF556B4306BFB8500089DAB /* GlyficaFont.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		6CF556B8306BFB8500089DAB /* Horoscope */ = {
+			isa = PBXGroup;
+			children = (
+				6CF556B6306BFB8500089DAB /* HoroscopeView.swift */,
+				6CF556B7306BFB8500089DAB /* HoroscopeViewModel.swift */,
+			);
+			path = Horoscope;
+			sourceTree = "<group>";
+		};
+		6CF556BA306BFB8500089DAB /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				6CF556B9306BFB8500089DAB /* GlyficaApp.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		6CF556BD306BFB8500089DAB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6CF556BB306BFB8500089DAB /* BirthProfile.swift */,
+				6C50A0053070000000AB0010 /* QuizAnswers.swift */,
+				6C50A0053070000000AB0015 /* Subscription.swift */,
+				6CF556BC306BFB8500089DAB /* ZodiacSign.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6C50A0073070000000AB0015 /* Paywall */ = {
+			isa = PBXGroup;
+			children = (
+				6C50A0053070000000AB0017 /* PaywallView.swift */,
+			);
+			path = Paywall;
+			sourceTree = "<group>";
+		};
+		6C50A0073070000000AB0010 /* Quiz */ = {
+			isa = PBXGroup;
+			children = (
+				6C50A0053070000000AB0013 /* QuizView.swift */,
+				6C50A0053070000000AB0012 /* QuizViewModel.swift */,
+			);
+			path = Quiz;
+			sourceTree = "<group>";
+		};
+		6CF556C0306BFB8500089DAB /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				6CF556BE306BFB8500089DAB /* ProfileView.swift */,
+				6CF556BF306BFB8500089DAB /* ProfileViewModel.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		6CF556C3306BFB8500089DAB /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				6CF556C1306BFB8500089DAB /* AppRouter.swift */,
+				6CF556C2306BFB8500089DAB /* RootView.swift */,
+			);
+			path = Root;
+			sourceTree = "<group>";
+		};
+		6CF556C9306BFB8500089DAB /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				6CF556C4306BFB8500089DAB /* CompatibilityService.swift */,
+				6CF556C5306BFB8500089DAB /* DailyForecastService.swift */,
+				6C50A0053070000000AB0001 /* FirebaseService.swift */,
+				6CF556C6306BFB8500089DAB /* HoroscopeService.swift */,
+				6CF556C7306BFB8500089DAB /* PartnerStore.swift */,
+				6CF556C8306BFB8500089DAB /* ProfileStore.swift */,
+				6C50A0053070000000AB0011 /* QuizStore.swift */,
+				6C50A0053070000000AB0018 /* ReadingService.swift */,
+				6C50A0053070000000AB0002 /* SessionStore.swift */,
+				6C50A0053070000000AB0016 /* SubscriptionStore.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		6CF556CB306BFB8500089DAB /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				6CF556CA306BFB8500089DAB /* RootTabView.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		6CF556CC306BFB8500089DAB /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				6C50A0053070000000AB0014 /* Constants.swift */,
+				6CF556AD306BFB8500089DAB /* Compatibility */,
+				6CF556B0306BFB8500089DAB /* DailyForecast */,
+				6CF556B5306BFB8500089DAB /* DesignSystem */,
+				6CF556B8306BFB8500089DAB /* Horoscope */,
+				6CF556BA306BFB8500089DAB /* Main */,
+				6CF556BD306BFB8500089DAB /* Models */,
+				6C50A0073070000000AB0015 /* Paywall */,
+				6CF556C0306BFB8500089DAB /* Profile */,
+				6C50A0073070000000AB0010 /* Quiz */,
+				6CF556C3306BFB8500089DAB /* Root */,
+				6C50A0073070000000AB0001 /* Splash */,
+				6CF556CB306BFB8500089DAB /* TabBar */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		6C50A0073070000000AB0001 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				6C50A0053070000000AB0003 /* SplashView.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
+		6CF556CE306BFB8500089DAB /* Glyfica */ = {
+			isa = PBXGroup;
+			children = (
+				6C2C4B9F306D3DDD00E70781 /* GoogleService-Info.plist */,
+				6C50A0053070000000AB0004 /* Info.plist */,
+				6CF556C9306BFB8500089DAB /* Services */,
+				6CF556CC306BFB8500089DAB /* Core */,
+				6CF556CD306BFB8500089DAB /* Assets.xcassets */,
+			);
+			path = Glyfica;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -56,10 +299,13 @@
 			);
 			buildRules = (
 			);
-			fileSystemSynchronizedGroups = (
-				6C40370C306964F300AC9EB3 /* Glyfica */,
-			);
 			name = Glyfica;
+			packageProductDependencies = (
+				6C50A0023070000000AB0001 /* FirebaseCore */,
+				6C50A0023070000000AB0002 /* FirebaseAuth */,
+				6C50A0023070000000AB0003 /* FirebaseFirestore */,
+				6C50A0023070000000AB0004 /* FirebaseFunctions */,
+			);
 			productName = Glyfica;
 			productReference = 6C40370A306964F300AC9EB3 /* Glyfica.app */;
 			productType = "com.apple.product-type.application";
@@ -88,6 +334,9 @@
 			);
 			mainGroup = 6C403701306964F300AC9EB3;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				6C50A0033070000000AB0001 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6C40370B306964F300AC9EB3 /* Products */;
 			projectDirPath = "";
@@ -102,6 +351,8 @@
 		6C403708306964F300AC9EB3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
+				6CF556CF306BFB8500089DAB /* Assets.xcassets in Resources */,
+				6C2C4BA0306D3DDD00E70781 /* GoogleService-Info.plist in Resources */,
 			);
 		};
 /* End PBXResourcesBuildPhase section */
@@ -110,6 +361,41 @@
 		6C403706306964F300AC9EB3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
+				6CF556D0306BFB8500089DAB /* CompatibilityView.swift in Sources */,
+				6CF556D1306BFB8500089DAB /* CompatibilityViewModel.swift in Sources */,
+				6CF556D2306BFB8500089DAB /* DailyForecastView.swift in Sources */,
+				6CF556D3306BFB8500089DAB /* DailyForecastViewModel.swift in Sources */,
+				6CF556D4306BFB8500089DAB /* NightCard.swift in Sources */,
+				6CF556D5306BFB8500089DAB /* GlyficaColor.swift in Sources */,
+				6CF556D6306BFB8500089DAB /* GlyficaFont.swift in Sources */,
+				6CF556D7306BFB8500089DAB /* HoroscopeView.swift in Sources */,
+				6CF556D8306BFB8500089DAB /* HoroscopeViewModel.swift in Sources */,
+				6CF556D9306BFB8500089DAB /* GlyficaApp.swift in Sources */,
+				6CF556DA306BFB8500089DAB /* BirthProfile.swift in Sources */,
+				6CF556DB306BFB8500089DAB /* ZodiacSign.swift in Sources */,
+				6CF556DC306BFB8500089DAB /* ProfileView.swift in Sources */,
+				6CF556DD306BFB8500089DAB /* ProfileViewModel.swift in Sources */,
+				6CF556DE306BFB8500089DAB /* AppRouter.swift in Sources */,
+				6CF556DF306BFB8500089DAB /* RootView.swift in Sources */,
+				6CF556E0306BFB8500089DAB /* CompatibilityService.swift in Sources */,
+				6CF556E1306BFB8500089DAB /* DailyForecastService.swift in Sources */,
+				6CF556E2306BFB8500089DAB /* HoroscopeService.swift in Sources */,
+				6CF556E3306BFB8500089DAB /* PartnerStore.swift in Sources */,
+				6CF556E4306BFB8500089DAB /* ProfileStore.swift in Sources */,
+				6CF556E5306BFB8500089DAB /* RootTabView.swift in Sources */,
+				6C50A0043070000000AB0001 /* FirebaseService.swift in Sources */,
+				6C50A0043070000000AB0002 /* SessionStore.swift in Sources */,
+				6C50A0043070000000AB0003 /* SplashView.swift in Sources */,
+				6C50A0043070000000AB0010 /* QuizAnswers.swift in Sources */,
+				6C50A0043070000000AB0011 /* QuizStore.swift in Sources */,
+				6C50A0043070000000AB0012 /* QuizViewModel.swift in Sources */,
+				6C50A0043070000000AB0013 /* QuizView.swift in Sources */,
+				6C50A0043070000000AB0014 /* Constants.swift in Sources */,
+				6C50A0043070000000AB0015 /* Subscription.swift in Sources */,
+				6C50A0043070000000AB0016 /* SubscriptionStore.swift in Sources */,
+				6C50A0043070000000AB0017 /* PaywallView.swift in Sources */,
+				6C50A0043070000000AB0018 /* ReadingService.swift in Sources */,
+				6C50A0043070000000AB0019 /* PartnerEditorView.swift in Sources */,
 			);
 		};
 /* End PBXSourcesBuildPhase section */
@@ -168,7 +454,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -226,7 +512,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -243,12 +529,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = RPXJGA4ZYB;
+				DEVELOPMENT_TEAM = 3KHQS7CU9R;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_FILE = Glyfica/Info.plist;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -256,7 +542,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = khan.solo.Glyphica.Glyfica;
+				PRODUCT_BUNDLE_IDENTIFIER = khan.solo.Glyphica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -275,12 +561,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = RPXJGA4ZYB;
+				DEVELOPMENT_TEAM = 3KHQS7CU9R;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_FILE = Glyfica/Info.plist;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -288,7 +574,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = khan.solo.Glyphica.Glyfica;
+				PRODUCT_BUNDLE_IDENTIFIER = khan.solo.Glyphica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -320,6 +606,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6C50A0033070000000AB0001 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.17.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6C50A0023070000000AB0001 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6C50A0033070000000AB0001 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		6C50A0023070000000AB0002 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6C50A0033070000000AB0001 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		6C50A0023070000000AB0003 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6C50A0033070000000AB0001 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		6C50A0023070000000AB0004 /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6C50A0033070000000AB0001 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6C403702306964F300AC9EB3 /* Project object */;
 	validationLevel = 1;

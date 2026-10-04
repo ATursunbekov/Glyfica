@@ -1,0 +1,17 @@
+rules_version = '2';
+
+// Glyfica — each user can only touch data under their own users/{uid}.
+// Readings are written by Cloud Functions (Admin SDK bypasses rules);
+// clients may read their own cached reading docs.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+
+      match /readings/{readingId} {
+        allow read: if request.auth != null && request.auth.uid == uid;
+        allow write: if false;
+      }
+    }
+  }
+}
