@@ -48,7 +48,7 @@ struct PartnerEditorView: View {
                                 .frame(width: 36, height: 36)
                                 .glassEffect(.regular.interactive(), in: Circle())
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(.glyficaPlain)
                         Spacer()
                     }
 

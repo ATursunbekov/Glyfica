@@ -2,7 +2,7 @@
 //  RootTabView.swift
 //  Glyfica
 //
-//  Four-tab shell: Horoscope, Today, Oracle hub, Profile.
+//  Five-tab shell: Horoscope, Today, Tarot, Oracle hub, Profile.
 //
 
 import SwiftUI
@@ -10,6 +10,7 @@ import SwiftUI
 enum AppTab: Int, CaseIterable, Identifiable {
     case horoscope
     case forecast
+    case tarot
     case oracle
     case profile
 
@@ -19,6 +20,7 @@ enum AppTab: Int, CaseIterable, Identifiable {
         switch self {
         case .horoscope: return "Horoscope"
         case .forecast: return "Today"
+        case .tarot: return "Tarot"
         case .oracle: return "Oracle"
         case .profile: return "Profile"
         }
@@ -28,6 +30,7 @@ enum AppTab: Int, CaseIterable, Identifiable {
         switch self {
         case .horoscope: return "sparkles"
         case .forecast: return "sun.max"
+        case .tarot: return "rectangle.stack.fill"
         case .oracle: return "moon.stars"
         case .profile: return "person.crop.circle"
         }
@@ -47,6 +50,9 @@ struct RootTabView: View {
         }
         .tint(GlyficaColor.gold)
         .tabBarMinimizeBehavior(.onScrollDown)
+        .onChange(of: router.selectedTab) { _, _ in
+            Haptics.tap()
+        }
     }
 
     @ViewBuilder
@@ -54,6 +60,7 @@ struct RootTabView: View {
         switch tab {
         case .horoscope: HoroscopeFlowContainerView()
         case .forecast: DailyForecastFlowContainerView()
+        case .tarot: TarotFlowContainerView()
         case .oracle: ReadingsFlowContainerView()
         case .profile: ProfileFlowContainerView()
         }

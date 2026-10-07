@@ -89,7 +89,7 @@ private struct QuizRoot: View {
                             .frame(width: 36, height: 36)
                             .glassEffect(.regular.interactive(), in: Circle())
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.glyficaPlain)
                 } else {
                     Color.clear.frame(width: 36, height: 36)
                 }
@@ -603,7 +603,7 @@ struct QuizOptionButton: View {
                     .stroke(isSelected ? GlyficaColor.gold.opacity(0.7) : GlyficaColor.line, lineWidth: 1)
             )
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.glyficaPlain)
     }
 }
 
@@ -634,5 +634,8 @@ struct QuizSecondaryButtonStyle: ButtonStyle {
             .padding(.vertical, 10)
             .background(GlyficaColor.surface2.opacity(0.7), in: Capsule())
             .opacity(configuration.isPressed ? 0.8 : 1)
+            .onChange(of: configuration.isPressed) { _, pressed in
+                if pressed { Haptics.tap() }
+            }
     }
 }

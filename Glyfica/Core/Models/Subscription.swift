@@ -65,6 +65,18 @@ struct PersonalitySection: Identifiable, Equatable {
     let id: String
     let title: String
     let body: String
+
+    /// Asset catalog image shown above the section in Horoscope.
+    var imageName: String? {
+        switch id {
+        case "core": return "coreSelf"
+        case "love": return "LoveBonds"
+        case "work": return "workDecisions"
+        case "path": return "LivePath"
+        case "now": return "rightNow"
+        default: return nil
+        }
+    }
 }
 
 struct FullPersonalityReading: Equatable {

@@ -34,5 +34,6 @@ struct RootView: View {
         }
         .animation(.easeInOut(duration: 0.45), value: router.stage)
         .preferredColorScheme(.dark)
+        .buttonStyle(GlyficaDefaultButtonStyle())
     }
 }

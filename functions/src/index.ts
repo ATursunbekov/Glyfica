@@ -162,6 +162,16 @@ export const generateReading = onCall(
       });
     }
 
+    if (type === "tasseography") {
+      return generateTasseographyReading({
+        userRef,
+        ctx,
+        apiKey: openaiApiKey.value(),
+        imageBase64: payload.imageBase64,
+        mimeType: payload.mimeType,
+      });
+    }
+
     throw new HttpsError("invalid-argument", `Unsupported reading type: ${type}`);
   },
 );
@@ -598,6 +608,96 @@ async function generatePalmReading(args: {
 
   return {
     type: "palm",
+    cached: false,
+    ...reading,
+  };
+}
+
+async function generateTasseographyReading(args: {
+  userRef: DocumentReference;
+  ctx: UserContext;
+  apiKey: string;
+  imageBase64?: string;
+  mimeType?: string;
+}) {
+  const raw = (args.imageBase64 ?? "").replace(/\s/g, "");
+  if (!raw || raw.length < 1000) {
+    throw new HttpsError("invalid-argument", "Cup photo required.");
+  }
+  if (raw.length > 5_500_000) {
+    throw new HttpsError("invalid-argument", "Photo is too large. Try a smaller image.");
+  }
+
+  const mime = args.mimeType === "image/png" ? "image/png" : "image/jpeg";
+  const system = [
+    "You are a tasseography (coffee-cup / tea-leaf) reader for the Glyfica app.",
+    "Look at the attached photo of leftover grounds in a cup and write an entertainment reading.",
+    "If the image is unclear, still be gentle and say what shapes you can infer, but prefer useful poetic guidance over refusal.",
+    "Tone: warm, specific, calm, modern. No medical/financial/legal claims. No emojis.",
+    "Return ONLY valid JSON with exactly these keys:",
+    '{"headline":"...","overview":"...","symbols":"...","past":"...","present":"...","nearFuture":"...","advice":"...","clarity":72,"emotion":68,"timing":75,"fortune":61,"outlook":70}',
+    "headline: max 8 words. overview: 2 short paragraphs. each text field: 1-2 sentences.",
+    "Scores are integers 40-96. clarity~how clear the symbols feel, emotion~feeling tone, timing~when things move, fortune~opportunity, outlook~near future mood.",
+  ].join(" ");
+
+  const userText = [
+    `Name: ${args.ctx.name}`,
+    `Sun sign: ${args.ctx.sunSign}`,
+    `Life path: ${args.ctx.lifePath}`,
+    `Focus: ${labelConcern(args.ctx.concern)}`,
+    `Relationship: ${labelRelationship(args.ctx.relationship)}`,
+    "",
+    "Read this coffee/tea cup photo. Weave their chart lightly into the tone, but ground the reading in the shapes and clusters you can see in the grounds.",
+  ].join("\n");
+
+  const parsed = await callOpenAIMessages(args.apiKey, [
+    {role: "system", content: system},
+    {
+      role: "user",
+      content: [
+        {type: "text", text: userText},
+        {
+          type: "image_url",
+          image_url: {
+            url: `data:${mime};base64,${raw}`,
+            detail: "low",
+          },
+        },
+      ],
+    },
+  ], 0.8);
+
+  const reading = {
+    id: `cup_${Date.now()}`,
+    headline: String(parsed.headline ?? "").trim(),
+    overview: String(parsed.overview ?? "").trim(),
+    symbols: String(parsed.symbols ?? "").trim(),
+    past: String(parsed.past ?? "").trim(),
+    present: String(parsed.present ?? "").trim(),
+    nearFuture: String(parsed.nearFuture ?? "").trim(),
+    advice: String(parsed.advice ?? "").trim(),
+    clarity: clampScore(parsed.clarity),
+    emotion: clampScore(parsed.emotion),
+    timing: clampScore(parsed.timing),
+    fortune: clampScore(parsed.fortune),
+    outlook: clampScore(parsed.outlook),
+  };
+
+  if (!reading.headline || !reading.overview) {
+    throw new HttpsError("internal", "Incomplete cup reading.");
+  }
+
+  const doc = {
+    type: "tasseography",
+    ...reading,
+    model: "gpt-4o-mini",
+    generatedAt: Timestamp.now(),
+    updatedAt: Timestamp.now(),
+  };
+  await args.userRef.collection("readings").doc("tasseography_latest").set(doc, {merge: true});
+
+  return {
+    type: "tasseography",
     cached: false,
     ...reading,
   };

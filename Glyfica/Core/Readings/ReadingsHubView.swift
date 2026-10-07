@@ -2,39 +2,40 @@
 //  ReadingsHubView.swift
 //  Glyfica
 //
-//  Hub for Match, Tarot, and Palm under one tab ("Oracle").
+//  Hub for Match, Palm, and Cup under one tab ("Oracle").
+//  Tarot lives in its own tab.
 //
 
 import SwiftUI
 
 enum OracleDestination: String, Hashable, Identifiable, CaseIterable {
     case match
-    case tarot
     case palm
+    case cup
 
     var id: String { rawValue }
 
     var title: String {
         switch self {
         case .match: return "Match"
-        case .tarot: return "Tarot"
         case .palm: return "Palm"
+        case .cup: return "Cup"
         }
     }
 
     var subtitle: String {
         switch self {
         case .match: return "Chemistry between two charts"
-        case .tarot: return "Ask a question, then draw the cards"
         case .palm: return "Photograph your hand for a reading"
+        case .cup: return "Read the shapes in your coffee grounds"
         }
     }
 
     var icon: String {
         switch self {
         case .match: return "heart.fill"
-        case .tarot: return "rectangle.stack.fill"
         case .palm: return "hand.raised.fill"
+        case .cup: return "cup.and.saucer.fill"
         }
     }
 }
@@ -49,8 +50,8 @@ struct ReadingsFlowContainerView: View {
                     OracleDetailContainer(path: $path) {
                         switch destination {
                         case .match: CompatibilityView()
-                        case .tarot: TarotView()
                         case .palm: PalmView()
+                        case .cup: TasseographyView()
                         }
                     }
                 }
@@ -69,7 +70,7 @@ struct ReadingsHubView: View {
                         Text("Oracle")
                             .font(GlyficaFont.rounded(34, weight: .bold))
                             .foregroundStyle(GlyficaColor.ink)
-                        Text("Choose how you want to look — through a match, the cards, or your palm.")
+                        Text("Choose how you want to look — through a match, your palm, or the cup.")
                             .font(GlyficaFont.rounded(16))
                             .foregroundStyle(GlyficaColor.ink2)
                             .fixedSize(horizontal: false, vertical: true)
@@ -83,7 +84,7 @@ struct ReadingsHubView: View {
                             } label: {
                                 destinationRow(destination)
                             }
-                            .buttonStyle(.plain)
+                            .buttonStyle(.glyficaPlain)
                         }
                     }
                 }
@@ -146,7 +147,7 @@ private struct OracleDetailContainer<Content: View>: View {
                             .contentShape(Rectangle())
                             .glassEffect(.regular.interactive(), in: Circle())
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.glyficaPlain)
 
                     Spacer()
                 }

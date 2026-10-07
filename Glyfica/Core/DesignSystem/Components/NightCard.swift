@@ -105,7 +105,7 @@ struct GlassPrimaryButton: View {
     let action: () -> Void
 
     var body: some View {
-        Button(action: action) {
+        Button(action: Haptics.wrap(action)) {
             Text(title)
                 .font(GlyficaFont.rounded(16, weight: .bold))
                 .foregroundStyle(GlyficaColor.bg)

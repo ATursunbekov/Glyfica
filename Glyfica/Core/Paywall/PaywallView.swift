@@ -137,7 +137,7 @@ struct PaywallView: View {
                             )
                     )
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.glyficaPlain)
             }
         }
     }

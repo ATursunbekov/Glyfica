@@ -104,15 +104,21 @@ struct HoroscopeView: View {
                         }
                     } else if let full = viewModel.fullReading {
                         ForEach(full.sections) { section in
-                            NightCard {
-                                VStack(alignment: .leading, spacing: 10) {
-                                    Text(section.title)
-                                        .font(GlyficaFont.rounded(18, weight: .bold))
-                                        .foregroundStyle(GlyficaColor.gold)
-                                    Text(section.body)
-                                        .font(GlyficaFont.rounded(15))
-                                        .foregroundStyle(GlyficaColor.ink)
-                                        .fixedSize(horizontal: false, vertical: true)
+                            VStack(alignment: .leading, spacing: 12) {
+                                if let imageName = section.imageName {
+                                    sectionImage(imageName)
+                                }
+
+                                NightCard {
+                                    VStack(alignment: .leading, spacing: 10) {
+                                        Text(section.title)
+                                            .font(GlyficaFont.rounded(18, weight: .bold))
+                                            .foregroundStyle(GlyficaColor.gold)
+                                        Text(section.body)
+                                            .font(GlyficaFont.rounded(15))
+                                            .foregroundStyle(GlyficaColor.ink)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                    }
                                 }
                             }
                         }
@@ -178,5 +184,13 @@ struct HoroscopeView: View {
                 .foregroundStyle(GlyficaColor.ink)
         }
         .frame(maxWidth: 90, alignment: .leading)
+    }
+
+    private func sectionImage(_ name: String) -> some View {
+        Image(name)
+            .resizable()
+            .scaledToFit()
+            .frame(maxWidth: .infinity)
+            .accessibilityHidden(true)
     }
 }

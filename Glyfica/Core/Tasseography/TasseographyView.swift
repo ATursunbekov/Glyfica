@@ -1,5 +1,5 @@
 //
-//  PalmView.swift
+//  TasseographyView.swift
 //  Glyfica
 //
 
@@ -7,17 +7,9 @@ import PhotosUI
 import SwiftUI
 import UIKit
 
-struct PalmFlowContainerView: View {
-    var body: some View {
-        NavigationStack {
-            PalmView()
-        }
-    }
-}
-
-struct PalmView: View {
+struct TasseographyView: View {
     @EnvironmentObject private var profileStore: ProfileStore
-    @StateObject private var viewModel = PalmViewModel()
+    @StateObject private var viewModel = TasseographyViewModel()
 
     @State private var photoItem: PhotosPickerItem?
     @State private var showCamera = false
@@ -60,10 +52,10 @@ struct PalmView: View {
 
                 NightCard {
                     VStack(alignment: .leading, spacing: 14) {
-                        Text("Palm reading")
+                        Text("Coffee cup reading")
                             .font(GlyficaFont.rounded(20, weight: .bold))
                             .foregroundStyle(GlyficaColor.ink)
-                        Text("Take a clear photo of your open palm — or pick one from your gallery — and we’ll read the main lines.")
+                        Text("Photograph the leftover grounds in your cup — or pick a photo from your gallery — and we’ll read the shapes.")
                             .font(GlyficaFont.rounded(15))
                             .foregroundStyle(GlyficaColor.ink2)
                             .fixedSize(horizontal: false, vertical: true)
@@ -127,7 +119,7 @@ struct PalmView: View {
                         .foregroundStyle(GlyficaColor.danger)
                 }
 
-                GlassPrimaryButton(title: "Analyze palm") {
+                GlassPrimaryButton(title: "Read the cup") {
                     Task { await viewModel.analyze(profile: profileStore.profile) }
                 }
                 .disabled(!viewModel.canAnalyze)
@@ -157,10 +149,10 @@ struct PalmView: View {
                     ProgressView()
                         .tint(GlyficaColor.gold)
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Reading your palm…")
+                        Text("Reading the grounds…")
                             .font(GlyficaFont.rounded(16, weight: .semibold))
                             .foregroundStyle(GlyficaColor.ink)
-                        Text("Looking at the main lines and the story they suggest.")
+                        Text("Looking for shapes, timing, and the story in the cup.")
                             .font(GlyficaFont.rounded(14))
                             .foregroundStyle(GlyficaColor.ink2)
                     }
@@ -173,7 +165,7 @@ struct PalmView: View {
 
     // MARK: - Result
 
-    private func resultContent(_ reading: PalmReading) -> some View {
+    private func resultContent(_ reading: TasseographyReading) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 header
@@ -222,7 +214,7 @@ struct PalmView: View {
                     }
                 }
 
-                GlassPrimaryButton(title: "New palm reading") {
+                GlassPrimaryButton(title: "New cup reading") {
                     viewModel.startNewReading()
                     photoItem = nil
                 }
@@ -237,10 +229,10 @@ struct PalmView: View {
         }
     }
 
-    private func resultCharts(_ reading: PalmReading) -> some View {
+    private func resultCharts(_ reading: TasseographyReading) -> some View {
         NightCard {
             VStack(alignment: .leading, spacing: 18) {
-                Text("Palm profile")
+                Text("Cup profile")
                     .font(GlyficaFont.rounded(13, weight: .semibold))
                     .foregroundStyle(GlyficaColor.gold)
                     .textCase(.uppercase)
@@ -282,7 +274,7 @@ struct PalmView: View {
         .frame(width: 104, height: 104)
     }
 
-    private func scoreBar(_ score: PalmScore) -> some View {
+    private func scoreBar(_ score: CupScore) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
                 Text(score.title)
@@ -309,10 +301,10 @@ struct PalmView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("Palm")
+            Text("Cup")
                 .font(GlyficaFont.rounded(28, weight: .bold))
                 .foregroundStyle(GlyficaColor.ink)
-            Text("A quick reading from your hand.")
+            Text("Tasseography — a reading from the grounds.")
                 .font(GlyficaFont.rounded(14))
                 .foregroundStyle(GlyficaColor.ink2)
         }
@@ -326,7 +318,7 @@ struct PalmView: View {
                     .foregroundStyle(GlyficaColor.gold)
                     .textCase(.uppercase)
                     .tracking(0.5)
-                Text("Use soft light, open palm facing the camera, fingers relaxed, and keep lines in focus.")
+                Text("Drink most of the coffee, swirl once, tip the cup, then photograph the inside with soft light so the grounds and walls are visible.")
                     .font(GlyficaFont.rounded(14))
                     .foregroundStyle(GlyficaColor.ink2)
                     .fixedSize(horizontal: false, vertical: true)

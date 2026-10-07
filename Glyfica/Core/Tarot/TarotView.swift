@@ -193,7 +193,7 @@ struct TarotView: View {
                     .stroke(selected ? GlyficaColor.gold.opacity(0.45) : GlyficaColor.line, lineWidth: 1)
             )
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.glyficaPlain)
     }
 
     private var drawnCardsSection: some View {
@@ -430,8 +430,19 @@ struct TarotCardArt: View {
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .stroke(GlyficaColor.gold.opacity(0.4), lineWidth: 1)
             )
-            .rotationEffect(.degrees(isReversed ? 180 : 0))
+            .overlay(alignment: .topTrailing) {
+                if isReversed {
+                    Text("REV")
+                        .font(GlyficaFont.rounded(max(9, width * 0.1), weight: .bold))
+                        .foregroundStyle(GlyficaColor.bg)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 3)
+                        .background(GlyficaColor.gold, in: Capsule())
+                        .padding(6)
+                }
+            }
             .shadow(color: .black.opacity(0.35), radius: 8, y: 4)
+            // Keep art upright — reversed is shown via badge/label, not by flipping the image.
             .accessibilityLabel(isReversed ? "\(assetName), reversed" : assetName)
     }
 }
@@ -460,7 +471,7 @@ private struct FlowTopicGrid: View {
                             in: RoundedRectangle(cornerRadius: 14, style: .continuous)
                         )
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.glyficaPlain)
             }
         }
     }

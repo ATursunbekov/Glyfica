@@ -19,9 +19,9 @@ enum ReadingServiceError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .notSignedIn:
-            return "Sign in is required for a palm reading."
+            return "Sign in is required for this reading."
         case .invalidResponse:
-            return "Couldn’t read that palm. Try a clearer photo."
+            return "Couldn’t complete that reading. Try a clearer photo."
         case .remote(let message):
             return message
         }
@@ -180,6 +180,39 @@ enum ReadingService {
 
             guard let data = result.data as? [String: Any],
                   let reading = parsePalm(data)
+            else { throw ReadingServiceError.invalidResponse }
+
+            return reading
+        } catch let error as ReadingServiceError {
+            throw error
+        } catch {
+            throw ReadingServiceError.remote(error.localizedDescription)
+        }
+    }
+
+    static func fetchTasseographyReading(
+        imageBase64: String,
+        mimeType: String,
+        profile: BirthProfile?
+    ) async throws -> TasseographyReading {
+        guard FirebaseService.isConfigured,
+              Auth.auth().currentUser != nil
+        else {
+            if let profile { return localTasseographyFallback(for: profile) }
+            throw ReadingServiceError.notSignedIn
+        }
+
+        do {
+            let result = try await functions
+                .httpsCallable("generateReading")
+                .call([
+                    "type": "tasseography",
+                    "imageBase64": imageBase64,
+                    "mimeType": mimeType
+                ])
+
+            guard let data = result.data as? [String: Any],
+                  let reading = parseTasseography(data)
             else { throw ReadingServiceError.invalidResponse }
 
             return reading
@@ -559,6 +592,43 @@ enum ReadingService {
             mind: 70,
             destiny: 64,
             outlook: 66
+        )
+    }
+
+    private static func parseTasseography(_ data: [String: Any]) -> TasseographyReading? {
+        guard let overview = data["overview"] as? String, !overview.isEmpty else { return nil }
+        return TasseographyReading(
+            id: (data["id"] as? String) ?? UUID().uuidString,
+            headline: (data["headline"] as? String) ?? "Shapes in the cup",
+            overview: overview,
+            symbols: (data["symbols"] as? String) ?? "",
+            past: (data["past"] as? String) ?? "",
+            present: (data["present"] as? String) ?? "",
+            nearFuture: (data["nearFuture"] as? String) ?? "",
+            advice: (data["advice"] as? String) ?? "",
+            clarity: intScore(data["clarity"]),
+            emotion: intScore(data["emotion"]),
+            timing: intScore(data["timing"]),
+            fortune: intScore(data["fortune"]),
+            outlook: intScore(data["outlook"])
+        )
+    }
+
+    private static func localTasseographyFallback(for profile: BirthProfile) -> TasseographyReading {
+        TasseographyReading(
+            id: UUID().uuidString,
+            headline: "A soft story in the grounds",
+            overview: "Even without a live reading, \(profile.sign.title) cups often speak in quiet symbols — a path, a pause, a yes waiting for clearer light. Use this as a sketch until the full cup analysis returns.",
+            symbols: "Clusters near the rim can suggest a near decision; denser grounds toward the base point to something still settling.",
+            past: "Something unfinished has been shaping how you taste today’s choices.",
+            present: "The present favors noticing one clear shape instead of reading every speck at once.",
+            nearFuture: "A small opening appears when you answer honestly rather than waiting for perfect certainty.",
+            advice: "Photograph the cup again in soft light when you want a fuller reading.",
+            clarity: 66,
+            emotion: 70,
+            timing: 64,
+            fortune: 68,
+            outlook: 67
         )
     }
 

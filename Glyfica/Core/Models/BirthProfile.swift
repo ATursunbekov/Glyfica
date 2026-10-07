@@ -119,3 +119,50 @@ struct PalmReading: Equatable, Identifiable {
         ]
     }
 }
+
+struct CupScore: Equatable, Identifiable {
+    let id: String
+    let title: String
+    let value: Int
+}
+
+struct TasseographyReading: Equatable, Identifiable {
+    let id: String
+    let headline: String
+    let overview: String
+    let symbols: String
+    let past: String
+    let present: String
+    let nearFuture: String
+    let advice: String
+    let clarity: Int
+    let emotion: Int
+    let timing: Int
+    let fortune: Int
+    let outlook: Int
+
+    var scores: [CupScore] {
+        [
+            CupScore(id: "clarity", title: "Clarity", value: clarity),
+            CupScore(id: "emotion", title: "Emotion", value: emotion),
+            CupScore(id: "timing", title: "Timing", value: timing),
+            CupScore(id: "fortune", title: "Fortune", value: fortune),
+            CupScore(id: "outlook", title: "Outlook", value: outlook)
+        ]
+    }
+
+    var overall: Int {
+        let values = [clarity, emotion, timing, fortune, outlook]
+        return values.reduce(0, +) / max(values.count, 1)
+    }
+
+    var sections: [(title: String, body: String)] {
+        [
+            ("Symbols in the cup", symbols),
+            ("Past", past),
+            ("Present", present),
+            ("Near future", nearFuture),
+            ("Advice", advice)
+        ]
+    }
+}

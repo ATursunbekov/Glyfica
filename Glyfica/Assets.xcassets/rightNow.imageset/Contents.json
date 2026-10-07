@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Оранжевый месяц с песочными часами.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -236,7 +236,7 @@ struct ProfileView: View {
                     .padding(.vertical, 16)
                     .contentShape(Rectangle())
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.glyficaPlain)
                 .disabled(viewModel.isDeleting)
             }
         }
@@ -274,7 +274,7 @@ struct ProfileView: View {
             .padding(.vertical, 16)
             .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.glyficaPlain)
     }
 
     private var divider: some View {
